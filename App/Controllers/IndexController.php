@@ -1,14 +1,17 @@
 <?php
 
+namespace App\Controllers;
 
-namespace App\Controller\;
-//Ações que a rota chama.
+class IndexController {
 
-	public function index(){
-		echo 'HOME';
+	public function index() {
+		echo 'Index';
 	}
 
-	public function todosContatos(){
-		echo 'CONTATOS';
+	public function contatos() {
+		echo 'Contatos';
 	}
+}
+
+
 ?>

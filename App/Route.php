@@ -1,5 +1,4 @@
 <?php
-//Arquivo para as rotas.
 
 namespace App;
 
@@ -7,40 +6,53 @@ class Route {
 
 	private $routes;
 
-	public function __construct(){
+	public function __construct() {
 		$this->initRoutes();
+		$this->run($this->getUrl());
 	}
 
-
-	public function getRoutes(){
+	public function getRoutes() {
 		return $this->routes;
 	}
 
-	public function setRoutes(array $routes){
+	public function setRoutes(array $routes) {
 		$this->routes = $routes;
 	}
-	//Quais são as rotas que a aplicação tem.
-	public function initRoutes(){
 
-		//Uma das pág é a home
+	public function initRoutes() {
+
 		$routes['home'] = array(
-			"route" => "/",
-			"controller" => "indexController.php",
-			"action" => "index"
+			'route' => '/',
+			'controller' => 'indexController',
+			'action' => 'index'
 		);
 
-		$route['contatos'] = array(
-			"route" => "/contatos",
-			"controller" => "indexController",
-			"action" => "todosContatos"
+		$routes['contatos'] = array(
+			'route' => '/contatos',
+			'controller' => 'indexController',
+			'action' => 'contatos'
 		);
 
 		$this->setRoutes($routes);
-	}//Vai definir qual será o controlador que entrará em ação e qual será a ação
+	}
 
+	public function run($url) {
+		foreach ($this->getRoutes() as $key => $route) {
+			if($url == $route['route']) {
+				$class = "App\\Controllers\\".ucfirst($route['controller']);
 
-	public function getUrl(){
+				$controller = new $class;
+				
+				$action = $route['action'];
+
+				$controller->$action();
+			}
+		}
+	}
+
+	public function getUrl() {
 		return parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-	}//Teste para ver a a URL está sendo capturada
+	}
 }
+
 ?>
