@@ -2,31 +2,33 @@
 
 namespace App\Controllers;
 
-class IndexController {
+use  MF\Controller\Action;
+use App\Connection;
+use App\Models\Produto;
 
-	private $view;
+class IndexController extends Action {
 
-	public function __construct(){
-		$this->view = new \stdClass();
-	}
 	public function index() {
 
-		$this->view->dados = array('sofá', 'cadeira', 'cama');
-		$this->render('index');
+		//$this->view->dados = array('sofá', 'cadeira', 'cama');
+		
+		//Intancia de conexao
+		$conn = Connection::getDb();	
+		//Instanciar o modelo
+		$produto = new Produto($conn);
+
+
+		$produtos = $produto->getProdutos();
+		$this->view->dados = $produtos;
+
+		$this->render('index' , 'layout1');
 	}
 
 	public function contatos() {
-		$this->view->dados = array('faca', 'celular', 'pc');
-		$this->render('contatos');
+		//$this->view->dados = array('faca', 'celular', 'pc');
+		$this->render('contatos', 'layout1');
 	}
 
-	public function render($view){
-
-		$classAtual = get_class($this);
-		$classAtual = str_replace("App\\Controllers\\", "", $classAtual);
-		$classAtual = strtolower(str_replace("Controller", "", $classAtual));
-		require_once "../App/Views/".$classAtual."/".$view.".phtml";
-	}
 }
 
 
