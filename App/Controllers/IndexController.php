@@ -2,21 +2,21 @@
 
 namespace App\Controllers;
 
+# Importando as classes
+
+//Recursos do mini
 use  MF\Controller\Action;
-use App\Connection;
+use MF\Model\Container;
+
+//Os models
 use App\Models\Produto;
+use App\Models\Info;
 
 class IndexController extends Action {
 
 	public function index() {
 
-		//$this->view->dados = array('sofá', 'cadeira', 'cama');
-		
-		//Intancia de conexao
-		$conn = Connection::getDb();	
-		//Instanciar o modelo
-		$produto = new Produto($conn);
-
+		$produto = Container::getModel('Produto');
 
 		$produtos = $produto->getProdutos();
 		$this->view->dados = $produtos;
@@ -25,6 +25,11 @@ class IndexController extends Action {
 	}
 
 	public function contatos() {
+
+		$info = Container::getModel('Info');
+
+		$infos = $info->getInfo();
+		$this->view->dados = $infos;
 		//$this->view->dados = array('faca', 'celular', 'pc');
 		$this->render('contatos', 'layout1');
 	}

@@ -3,6 +3,7 @@
 
 	foreach ($this->view->dados as $indice => $valor) {
 		# code...
-		echo $valor . "<hr>";
+		echo $valor['id'] . ' - ' .$valor['titulo'].' - ' . $valor['descricao'];
+		echo '<br>';
 	}
 ?>	
